@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Docker学习笔记"><meta name="keywords" content="docker,container"><meta name="author" content="GCS-ZHN,undefined"><meta name="copyright" content="GCS-ZHN"><title>Docker学习笔记【潇洒记忆】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- script(src=url_for("/js/mathjax/mathjax.js"))--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+});
+</script><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  gitment: {},
+  valine: {},
+}</script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Docker%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、Docker概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Docker%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Docker安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-pull"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 pull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-images"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 images</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-run"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 run</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-build"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.3 build</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4-ps"><span class="toc-number">1.2.5.</span> <span class="toc-text">1.2.4 ps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-5-rmi"><span class="toc-number">1.2.6.</span> <span class="toc-text">1.2.5 rmi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-6-rm"><span class="toc-number">1.2.7.</span> <span class="toc-text">1.2.6 rm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-7-kill"><span class="toc-number">1.2.8.</span> <span class="toc-text">1.2.7 kill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-8-start"><span class="toc-number">1.2.9.</span> <span class="toc-text">1.2.8 start</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-9-rename"><span class="toc-number">1.2.10.</span> <span class="toc-text">1.2.9 rename</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-10-system"><span class="toc-number">1.2.11.</span> <span class="toc-text">1.2.10 system</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-11-exec"><span class="toc-number">1.2.12.</span> <span class="toc-text">1.2.11 exec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-12-container"><span class="toc-number">1.2.13.</span> <span class="toc-text">1.2.12 container</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-13-save"><span class="toc-number">1.3.</span> <span class="toc-text">1.2.13 save</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-14-load"><span class="toc-number">1.4.</span> <span class="toc-text">1.2.14 load</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-15-tag"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.2.15 tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-16-push"><span class="toc-number">1.4.2.</span> <span class="toc-text">1.2.16 push</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Dockerfile"><span class="toc-number">2.</span> <span class="toc-text">二、Dockerfile</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 常见指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FROM"><span class="toc-number">2.1.1.</span> <span class="toc-text">FROM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COPY"><span class="toc-number">2.1.2.</span> <span class="toc-text">COPY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ADD"><span class="toc-number">2.1.3.</span> <span class="toc-text">ADD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ENV"><span class="toc-number">2.1.4.</span> <span class="toc-text">ENV</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RUN"><span class="toc-number">2.1.5.</span> <span class="toc-text">RUN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ENTRYPOINT"><span class="toc-number">2.1.6.</span> <span class="toc-text">ENTRYPOINT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMD"><span class="toc-number">2.1.7.</span> <span class="toc-text">CMD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WORKDIR"><span class="toc-number">2.1.8.</span> <span class="toc-text">WORKDIR</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B3%A8%E6%84%8F"><span class="toc-number">3.</span> <span class="toc-text">三、注意</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81docker%E5%AE%B9%E5%99%A8%E5%8F%82%E6%95%B0%E4%BF%AE%E6%94%B9"><span class="toc-number">4.</span> <span class="toc-text">四、docker容器参数修改</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E8%BF%BD%E5%8A%A0TCP%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 追加TCP端口映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E8%BF%BD%E5%8A%A0privilege%E6%9D%83%E9%99%90"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 追加privilege权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E8%BF%BD%E5%8A%A0%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 追加自动重启</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E5%BC%80%E6%94%BEdocker%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 开放docker远程服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-%E4%BF%AE%E6%94%B9Docker-Root%E7%9B%AE%E5%BD%95"><span class="toc-number">4.5.</span> <span class="toc-text">4.5 修改Docker Root目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%87%AA%E5%BB%BADocker%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93"><span class="toc-number">5.</span> <span class="toc-text">五、自建Docker私有仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Eregister%E9%95%9C%E5%83%8F%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="toc-number">5.1.</span> <span class="toc-text">基于register镜像的建立</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">6.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">GCS-ZHN</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://github.com/GCS-ZHN" target="_blank">GitHub<i class="icon-dot bg-color8"></i></a><a class="links-button button-hover" href="mailto:zhang.h.n@foxmail.com" target="_blank">E-Mail<i class="icon-dot bg-color4"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">19</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">42</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">11</span></a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/archives">归档</a></nav><div class="right-info"><a class="title-name" href="/">潇洒记忆</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">Docker学习笔记</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2022-06-21 | 更新于 2022-07-10</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/docker/">docker</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/container/">container</a></div></div></div><div class="main-content"><h1 id="一、Docker概述"><a href="#一、Docker概述" class="headerlink" title="一、Docker概述"></a>一、Docker概述</h1><p>docker是一种轻量级应用容器引擎，可以将应用与具体操作系统的联系剥离出来，并且可以将不同应用容器相互隔离，能够在保证效率的前提下降低应用之间的相互影响。其设计可以与虚拟机进行类比，但比虚拟机更轻量。由于docker容器具有独立完整的运行环境，可以实现“打包一次，到处运行”（类似上世纪90年代，java的口号“write once, run anywhere”），而且十分轻量，十分适合应用的开发部属，是互联网APP开发的首选。在docker的基础上，还衍生了 <a target="_blank" rel="noopener" href="https://www.kubernetes.org.cn/k8s">Kubernetes</a>（K8S，底层支持不仅是docker）、dockerSwap（docker公司亲儿子）等集群化管理工具，容器化时代已经来临。</p>
+<h2 id="1-1-Docker安装"><a href="#1-1-Docker安装" class="headerlink" title="1.1 Docker安装"></a>1.1 Docker安装</h2><pre><code>## 安装依赖
+yum install -y yum-utils device-mapper-persistent-data lvm2
+## 设置仓库
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+## 安装docker
+yum install docker-ce docker-ce-cli containerd.io
+## 开机启动
+systemctl start docker
+systemctl enable docker
+## 测试安装
+docker version
+docker run hello-world
+
+## 官方脚本一键安装
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+</code></pre><p>ubuntu安装参见<code>https://www.runoob.com/docker/ubuntu-docker-install.html</code></p>
+<p>nvidia-docker 安装参见<a target="_blank" rel="noopener" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#install-guide">英伟达官网</a></p>
+<span id="more"></span>
+<h2 id="1-2-基本命令"><a href="#1-2-基本命令" class="headerlink" title="1.2 基本命令"></a>1.2 基本命令</h2><p>docker类似于一个独立于操作系统的虚拟机，因此它的操作基本命令都是<code>docker</code>命令的子命令。</p>
+<h3 id="1-2-1-pull"><a href="#1-2-1-pull" class="headerlink" title="1.2.1 pull"></a>1.2.1 pull</h3><p><code>docker pull [options] NAME[:TAG]</code></p>
+<p>docker的应用容器建立基础是docker应用镜像。镜像除了可以自己构建外，已经有很多镜像被制作好放到指定仓库中。pull命令的作用在于从远程仓库中下载镜像到docker中。</p>
+<ul>
+<li>options 一些命令参数选项，通过docker pull —help查看</li>
+<li>:TAG 用于指定镜像版本，默认是latest。</li>
+<li>NAME 镜像名称</li>
+</ul>
+<p>下例就是获取网易仓库提供的Tomcat镜像。</p>
+<p><code>docker pull hub.c.163.com/library/tomcat:latest</code> </p>
+<p>常见docker镜像仓库</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></li>
+<li></li>
+</ul>
+<h3 id="1-2-2-images"><a href="#1-2-2-images" class="headerlink" title="1.2.2 images"></a>1.2.2 images</h3><p><code>docker images [options] [REPOSITORY[:TAG]]</code></p>
+<p>获取docker中已安装的镜像，可以列举全部镜像也可以指定镜像名称。</p>
+<h3 id="1-2-3-run"><a href="#1-2-3-run" class="headerlink" title="1.2.3 run"></a>1.2.3 run</h3><p><code>docker run [options] IMAGE[:TAG] [COMMAND] [ARG..]</code></p>
+<ul>
+<li>IMAGE 镜像名称</li>
+<li>COMMAND 运行起来的时候要执行什么命令.</li>
+<li>options 运行参数选项<ul>
+<li>-p 端口映射，将系统端口与docker端口建立映射关系，如 -p 8867:8867</li>
+<li>-v 文件夹映射，将主机文件与docker文件建立映射关系，如 -v /public/home/zhanghn:/home，前者为主机，后者为容器</li>
+<li>-d 后台运行，此时不会看到输出日志在控制台</li>
+<li>—network 用于指定网络，常指定为host,使用主机网络</li>
+<li>—name 用于指定容器名称，不指定时名称随机，不便于管理</li>
+</ul>
+</li>
+</ul>
+<p>从镜像创建新的容器并运行。</p>
+<p>例如创建Ubuntu-vscode的新容器，容器内home文件夹与主机文件夹zhanghn对应，以免相互拷贝文件的麻烦。vscode镜像的base镜像是centos镜像。</p>
+<p><code>docker run -d -p 8867:8067 -v /public/home/zhanghn:/home/zhanghn -v /public/packages:/home/packages --name zhanghn ubuntu-vscode:v3.22.1</code></p>
+<p>docker run -d -p PORT:8067 -v /public/home/USERNAME:/home/USERNAME -v /public/packages:/home/packages —name USERNAME ubuntu-vscode:v3.22.2 —user-data-dir /home/USERNAME/.vscode-server —extensions-dir /home/USERNAME/.local/share/code-server/extensions —config /home/USERNAME/.config/code-server/key.yaml &amp;&amp; chmod 666 /home/USERNAME/.config/code-server/key.yaml</p>
+<p>容器中可以通过ssh连接外部，但是好像无法直接从外部ssh到容器中。</p>
+<h3 id="1-2-3-build"><a href="#1-2-3-build" class="headerlink" title="1.2.3 build"></a>1.2.3 build</h3><p><code>docker build [OPTIONS] PATH | URL |</code></p>
+<p>自定义镜像制作的命令，需要事先撰写<code>Dockerfile</code>，道理类似于<code>CMakeLists.txt</code>和<code>Makefiles</code>，为固定文件名。</p>
+<ul>
+<li>OPTIONS 构建选项，如-t可以为构建镜像命名和版本</li>
+<li>PATH|URL Dockerfile所在目录或者URL</li>
+</ul>
+<h3 id="1-2-4-ps"><a href="#1-2-4-ps" class="headerlink" title="1.2.4 ps"></a>1.2.4 ps</h3><p><code>docker ps</code></p>
+<p>类似于linux命令ps，列举当前运行的或结束的容器进程。</p>
+<h3 id="1-2-5-rmi"><a href="#1-2-5-rmi" class="headerlink" title="1.2.5 rmi"></a>1.2.5 rmi</h3><p><code>docker rmi</code></p>
+<p>移除镜像。</p>
+<h3 id="1-2-6-rm"><a href="#1-2-6-rm" class="headerlink" title="1.2.6 rm"></a>1.2.6 rm</h3><p><code>docker rm</code></p>
+<p>移除容器。常用组合命令产生已经退出的容器</p>
+<pre><code>docker rm `docker ps -a|grep Exited|awk &#39;&#123;print $1&#125;&#39;`
+</code></pre><h3 id="1-2-7-kill"><a href="#1-2-7-kill" class="headerlink" title="1.2.7 kill"></a>1.2.7 kill</h3><p><code>docker kill ID</code></p>
+<p>类似于linux的kill，终止一个容器进程。</p>
+<h3 id="1-2-8-start"><a href="#1-2-8-start" class="headerlink" title="1.2.8 start"></a>1.2.8 start</h3><p><code>docker start ID/NAME</code></p>
+<p>不同于run，start用于启动已经创建的容器。</p>
+<h3 id="1-2-9-rename"><a href="#1-2-9-rename" class="headerlink" title="1.2.9 rename"></a>1.2.9 rename</h3><p><code>docker rename OLD NEW</code></p>
+<p>对容器进行重命名。</p>
+<h3 id="1-2-10-system"><a href="#1-2-10-system" class="headerlink" title="1.2.10 system"></a>1.2.10 system</h3><p><code>docker system prune --volumes -a</code></p>
+<p>清除没用的，悬空的镜像</p>
+<h3 id="1-2-11-exec"><a href="#1-2-11-exec" class="headerlink" title="1.2.11 exec"></a>1.2.11 exec</h3><p><code>docker exec -it VSCODE-zhanghn bash</code></p>
+<p>exec命令用于已创建的容器，执行特定的命令，-it选项使得其以终端形式运行。exec命令不受dockerfile的ENTRYPOINT影响。方便以终端形式使用容器。</p>
+<h3 id="1-2-12-container"><a href="#1-2-12-container" class="headerlink" title="1.2.12 container"></a>1.2.12 container</h3><p><code>docker container &lt;cmd&gt;</code></p>
+<p>这是docker容器的系列操作命令集</p>
+<ol>
+<li><code>docker container inspect &lt;CONTAINER ID&gt;</code> 查看docker容器配置信息</li>
+<li><p><code>docker container update &lt;CONTAINER ID&gt; &lt;OPTION&gt;</code> 追加或更新docker容器配置参数，但不是全部都可以</p>
+<p><code>docker container update VSCODE-zhanghn --restart=always</code>就能修改restart参数</p>
+</li>
+</ol>
+<h2 id="1-2-13-save"><a href="#1-2-13-save" class="headerlink" title="1.2.13 save"></a>1.2.13 save</h2><p><code>docker save -o &lt;*.tar&gt; &lt;Image&gt;</code></p>
+<p>该命令能够将docker镜像保存，便于docker镜像迁移而不必发布到dockerhub上。与<code>docker load</code>对应。</p>
+<h2 id="1-2-14-load"><a href="#1-2-14-load" class="headerlink" title="1.2.14 load"></a>1.2.14 load</h2><p><code>docker load -i &lt;*.tar&gt;</code></p>
+<p>将save保存的镜像导入，一般用于镜像迁移。</p>
+<h3 id="1-2-15-tag"><a href="#1-2-15-tag" class="headerlink" title="1.2.15 tag"></a>1.2.15 tag</h3><p><code>docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]</code></p>
+<p>该命令给已有的本地镜像打新标签。常见场景是给<code>latest</code>标签的镜像同时起一个别的版本标签方便版本控制。</p>
+<h3 id="1-2-16-push"><a href="#1-2-16-push" class="headerlink" title="1.2.16 push"></a>1.2.16 push</h3><p><code>docker push docker push [OPTIONS] NAME[:TAG]</code></p>
+<p>该命令用于将本地镜像发布到镜像仓库，例如默认的dockerhub。</p>
+<h1 id="二、Dockerfile"><a href="#二、Dockerfile" class="headerlink" title="二、Dockerfile"></a>二、Dockerfile</h1><h2 id="2-1-常见指令"><a href="#2-1-常见指令" class="headerlink" title="2.1 常见指令"></a>2.1 常见指令</h2><h3 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h3><p>这是所有非基础镜像都有的指令，而且必须在首行。代表对应的base镜像。可以类比类的集成。</p>
+<h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>这是将主机文件拷贝至容器内的指令</p>
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>与COPY类似，推荐用COPY。对于tar.gz这种，会将其解压。</p>
+<h3 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h3><p>设置容器内环境变量</p>
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><p>在执行<code>docker build</code>时使用，执行相应的bash命令</p>
+<h3 id="ENTRYPOINT"><a href="#ENTRYPOINT" class="headerlink" title="ENTRYPOINT"></a>ENTRYPOINT</h3><p>在运行容器时使用，类似于C++的main函数，会执行bash命令。注意的是，指令启动的进程是docker容器的1号进程，类似于Linux的1号进程，必须是持续运行的进程。该进程的终结意味着docker容器的终结。可以使用<code>&amp;&amp;</code>进行多条语句，但最后一句必须是持续运行的进程。</p>
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>在运行容器时使用，与ENTRYPOINT类似。会被ENTRYPOINT覆盖。可以再build时从命令行接收参数并将内容传给ENTRYPOINT作为参数。因此可以用CMD写不定参。</p>
+<h3 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h3><p>设定build时当前工作目录，指的是镜像内目录而非主机目录</p>
+<h1 id="三、注意"><a href="#三、注意" class="headerlink" title="三、注意"></a>三、注意</h1><ol>
+<li><p>docker容器启动时以非交互形式进入的bash，因此环境变量等配置只能在~/.bashrc中。</p>
+</li>
+<li><p>docker容器创建后，可以在相应目录下修改配置参数<a target="_blank" rel="noopener" href="https://blog.csdn.net/wesleyflagon/article/details/78961990">https://blog.csdn.net/wesleyflagon/article/details/78961990</a></p>
+</li>
+<li><p>docker容器默认存储目录修改可以在<code>/etc/docker/daemon.conf</code>中配置graph参数，也可以在<code>/lib/systemd/system/docker.service</code>中配置</p>
+<p>无法使用远程挂载目录作为docker目录，会报错。<br>ExecStart=/usr/bin/dockerd  —graph=/home/docker</p>
+</li>
+</ol>
+<h1 id="四、docker容器参数修改"><a href="#四、docker容器参数修改" class="headerlink" title="四、docker容器参数修改"></a>四、docker容器参数修改</h1><p>这里针对的是已经启动的容器，对于新建容器，只需要在run时增加参数即可。一般性操作在于关闭docker服务，并在对应的docker容器目录下·<code>&lt;dockerRootDir&gt;/containers/&lt;ID&gt;/</code>修改<code>hostconfig.json</code>和<code>config.v2.json</code>。并重启docker。两个配置文件一个针对的是宿主机（host），一个针对的容器自己，配置时需要同步信息。</p>
+<h2 id="4-1-追加TCP端口映射"><a href="#4-1-追加TCP端口映射" class="headerlink" title="4.1 追加TCP端口映射"></a>4.1 追加TCP端口映射</h2><p>修改<code>hostconfig.json</code>，增加TCP端口绑定。其中key值为docker容器内端口，HostPort为宿主机端口。</p>
+<p>  “PortBindings”:{<br>    “8067/tcp”:[{“HostIp”:””,”HostPort”:”8067”}],<br>    “8080/tcp”:[{“HostIp”:””,”HostPort”:”28080”}]<br>  }</p>
+<p>修改<code>config.v2.json</code>，增加docker端口暴露和端口映射（必须和hostconfig.json对应）。</p>
+<p>  “ExposedPorts”:{<br>    “8067/tcp”:{},<br>    “8080/tcp”:{}<br>  }</p>
+<p>  “Ports”:{<br>    “8067/tcp”:[{“HostIp”:”0.0.0.0”,”HostPort”:”8067”}],<br>    “8080/tcp”:[{“HostIp”:”0.0.0.0”,”HostPort”:”28080”}]<br>  }</p>
+<h2 id="4-2-追加privilege权限"><a href="#4-2-追加privilege权限" class="headerlink" title="4.2 追加privilege权限"></a>4.2 追加privilege权限</h2><p>在创建新docker容器时，<code>--privileged=true</code>可以授予容器与宿主机root用户一样的权限，方便更改一些系统级变量。虽然docker内root是root用户，但对于宿主机来说，它未获得privilege权限时仍然是普通用户，无法修改一些基于宿主机的系统参数。因此privilege权限实际上是宿主机对容器的授权，其配置是针对宿主机的，因此只需要修改<code>hostconfig.json</code>。</p>
+<p>  “Privileged”:true</p>
+<p>  “SecurityOpt”:[“label=disable”]</p>
+<p>  “MaskedPaths”:null</p>
+<p>  “ReadonlyPaths”:null //必须将这些只读路径删除</p>
+<p>此时重启后，可以再容器中修改配置<code>sysctl.conf</code>，甚至可以在docker容器中启动docker。</p>
+<p>  fs.inotify.max_user_watches=524288 //例如在sysctl.conf中设定最大文件监视<br>  sysctl -p</p>
+<p>值得注意的是，上述系统变量修改不会持久化保存在docker容器中，重启docker容器需要重新执行<code>sysctl -p</code>。</p>
+<h2 id="4-3-追加自动重启"><a href="#4-3-追加自动重启" class="headerlink" title="4.3 追加自动重启"></a>4.3 追加自动重启</h2><p>在创建新docker容器时，<code>--restart=always</code>可以让容器随着docker服务一起启动，剂自动重启。对于已经有的容器，有两种方法可以实现追加。</p>
+<ol>
+<li><p>update命令</p>
+<p><code>docker container update &lt;CONTAINER ID&gt; --restart=always</code></p>
+<p>这个命令前面已经提到过</p>
+</li>
+<li><p>修改hostconfig.json中RestartPolicy</p>
+<p>“RestartPolicy”:{“Name”:”no”,”MaximumRetryCount”:0} # 修改前<br>“RestartPolicy”:{“Name”:”always”,”MaximumRetryCount”:0} # 修改后</p>
+</li>
+</ol>
+<h2 id="4-4-开放docker远程服务"><a href="#4-4-开放docker远程服务" class="headerlink" title="4.4 开放docker远程服务"></a>4.4 开放docker远程服务</h2><p>在<code>/lib/systemd/system/docker.service</code>修改如下配置，增加unix和tcp配置。此外可以通过其他配置方法，但多种配置混合会造成冲突而启动失败，故建议统一在dcoker.service中修改。</p>
+<pre><code># for containers run by docker
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375
+</code></pre><p>而远端可以通过<code>docker -H &lt;ip:port&gt;</code>形式或修改环境变量。2375是默认docker服务端口，可以省略。</p>
+<pre><code>docker -H 172.16.10.210 images 所列为远程
+export DOCKER_HOST=172.16.10.210:2375
+docker images ## 所列为远程服务器docker内容
+export DOCKER_HOST=
+docker images ## 本地
+</code></pre><h2 id="4-5-修改Docker-Root目录"><a href="#4-5-修改Docker-Root目录" class="headerlink" title="4.5 修改Docker Root目录"></a>4.5 修改Docker Root目录</h2><p>默认情况下，docker的根目录是<code>/var/lib/docker</code>，这里面包含所有镜像和容器等内容。但一般var目录是较小的，不适合生产环境大规模部署。可以通过修改graph参数调整路径，可以有以下两种修改策略。</p>
+<pre><code>//查看当前docker root目录
+# docker info|grep -i &quot;docker root dir&quot;
+Docker Root Dir: /var/lib/docker
+
+//修改/etc/docker/daemon.json，添加&quot;graph&quot;:&quot;/docker/docker&quot;
+# vim /etc/docker/daemon.json
+# systemctl stop docker
+# systemctl daemon-reload
+# systemctl start docker
+
+//修改/lib/systemd/system/docker.service，在dockerd启动参数中追加 --graph=/docker/docker
+# vim /lib/systemd/system/docker.service
+</code></pre><h1 id="五、自建Docker私有仓库"><a href="#五、自建Docker私有仓库" class="headerlink" title="五、自建Docker私有仓库"></a>五、自建Docker私有仓库</h1><h2 id="基于register镜像的建立"><a href="#基于register镜像的建立" class="headerlink" title="基于register镜像的建立"></a>基于register镜像的建立</h2><p>docker官方提供了一个<a target="_blank" rel="noopener" href="https://hub.docker.com/_/registry">register镜像</a>，只要拉取并暴露5000端口即建立。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull register</span><br><span class="line">docker run -d -p 5000:5000 --restart always --name registry registry</span><br></pre></td></tr></table></figure><br>然后可以看到<code>http://&lt;host&gt;:5000/v2/_catalog/</code>能被正常访问。此时可以通过设置tag并push到私有仓库<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag &lt;Image&gt;[:tag] &lt;host&gt;:5000/&lt;Target_Imagename&gt;[:tag]</span><br><span class="line">docker push &lt;host&gt;:5000/&lt;Target_Imagename&gt;[:tag]</span><br></pre></td></tr></table></figure><br>值得注意的是，如果私有仓库不是localhost，那么需要修改<code>/etc/docker/daemon.json</code><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;insecure-registries&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;&lt;host&gt;:5000&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><br>并重启docker服务<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wnw001/article/details/106591047">github上面超火的code-server+docker安装教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.v2ex.com/t/292035">新手指南：如何将应用打包成为 Docker 镜像？</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yangzhenping/article/details/43567155">Docker容器内不能联网的6种解决方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/lwcaiCSDN/article/details/87862025">CSDN</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95533274">知乎-修改 Docker 的默认存储路径</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/richerdyoung/p/10154753.html">追加docker容器端口</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuochong/p/10070516.html">修改Docker启动参数</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/weiyiming007/p/10168733.html">Docker远程</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41282455/article/details/107315798">Docker迁移镜像</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hallyz945/article/details/124696972">自建docker仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jb51.net/article/153729.htm">Docker利用busybox创建基础镜像(base image)</a></li>
+</ol>
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">GCS-ZHN</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://gcszhn.top/2022/06/21/docker/">https://gcszhn.top/2022/06/21/docker/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gcszhn.top">潇洒记忆</a>！</span></div></div></article><div id="pagination"><div class="prev-post pull-left"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2022/06/23/ffmpeg/"><i class="fas fa-angle-left">&nbsp;</i><span>ffmpeg学习笔记</span></a></div><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2022/04/29/python%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/"><span>python单元测试--基于pytest</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2022 By GCS-ZHN</div><a href="https://beian.miit.gov.cn/" target="_blank">&nbsp; 浙ICP备2022014039号</a></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--></body></html>
