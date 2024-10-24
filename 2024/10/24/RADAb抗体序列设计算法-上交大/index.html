@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="RADAb抗体序列设计算法-上交大"><meta name="keywords" content="antibody design,ai"><meta name="author" content="GCS-ZHN,undefined"><meta name="copyright" content="GCS-ZHN"><title>RADAb抗体序列设计算法-上交大【潇洒记忆】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- script(src=url_for("/js/mathjax/mathjax.js"))--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+});
+</script><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  gitment: {},
+  valine: {},
+}</script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">算法解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">变量声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text">扩散模型定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">检索算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">扩散生成模型架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%87%A0%E4%BD%95%E4%BF%A1%E6%81%AF%E5%88%86%E6%94%AF"><span class="toc-number">1.4.1.</span> <span class="toc-text">全局几何信息分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8CDR%E4%BF%A1%E6%81%AF%E5%88%86%E6%94%AF"><span class="toc-number">1.4.2.</span> <span class="toc-text">局部CDR信息分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loss%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.5.</span> <span class="toc-text">Loss的定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">训练配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E8%AF%84%E4%BC%B0"><span class="toc-number">3.</span> <span class="toc-text">结果评估</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">GCS-ZHN</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://github.com/GCS-ZHN" target="_blank">GitHub<i class="icon-dot bg-color10"></i></a><a class="links-button button-hover" href="mailto:zhang.h.n@foxmail.com" target="_blank">E-Mail<i class="icon-dot bg-color2"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">27</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">55</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">19</span></a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/archives">归档</a></nav><div class="right-info"><a class="title-name" href="/">潇洒记忆</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">RADAb抗体序列设计算法-上交大</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2024-10-24 | 更新于 2024-10-24</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/">AI4S</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/%E8%9B%8B%E7%99%BD%E8%AE%BE%E8%AE%A1/">蛋白设计</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/%E8%9B%8B%E7%99%BD%E8%AE%BE%E8%AE%A1/%E6%8A%97%E4%BD%93%E8%AE%BE%E8%AE%A1/">抗体设计</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/antibody-design/">antibody design</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/ai/">ai</a></div></div></div><div class="main-content"><p>论文名称：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2410.15040">《Retrieval Augmented Diffusion Model for Structure-informed Antibody Design and Optimization》</a></p>
+<p>论文亮点：利用MASTER算法，通过输入给定CDR骨架结构，检索PDB得到相似的CDR fragment数据，从而增强序列设计的能力。</p>
+<p>论文缺点：检索增强的PDB可能搜到原始数据，因此存在数据泄露风险。对未能检索groud truth的数据性能较差。</p>
+<p>论文代码：暂无开源信息。</p>
+<img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/cover.png" class="">
+<span id="more"></span>
+<h1 id="算法解析"><a href="#算法解析" class="headerlink" title="算法解析"></a>算法解析</h1><p>RADAb算法是一个基于RA信息的序列扩散算法，这与RFdiffusion这类结构扩散算法不同。</p>
+<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><p>在文章开篇，作者对其声明的算法变量进行了说明：</p>
+<ul>
+<li>第$i$位的残基类型$s_i\in {ACDEFGHIKLMNPQRSTVWY}$</li>
+<li>第$i$位的残基CA原子坐标$x_i \in R^3$</li>
+<li>第$i$位的残基原子相对标准位置的旋转矩阵$O_i\in SO(3)$</li>
+<li>$i=1,2,…,N$,其中N为序列长度。</li>
+<li>$R={s_j|j\in {a+1,…,a+m}}$为位于$a+1$和$a+m$区间的需要设计的CDR3序列采样分布。</li>
+<li>$C_{ab}={(s_i,x_j,O_j)|i\in{1,…,M}\backslash{a+1,…,a+m},j\in{1,…,M}}$表示给定抗体结构和非CDR残基序列信息。</li>
+<li>$C_{ag}={(s_i,x_j,O_i)|i\in{M+1,…,N}}$表示给定抗原的结构和序列信息。</li>
+<li>$\mathbb{A}={A_i|i\in{1,…,k}}$表示检索到的CDR fragment信息。</li>
+</ul>
+<p>最终目标就是预测CDR序列结合$R$的分布。</p>
+<h2 id="扩散模型定义"><a href="#扩散模型定义" class="headerlink" title="扩散模型定义"></a>扩散模型定义</h2><p>这里的扩散模型是序列的扩散模型，结构化信息是在模型中嵌入。</p>
+<p>前向传播过程，线下求和系数$\beta^t$会随时间逐渐从0增加到1，不断增加随机噪声，直到天然氨基酸的随机分布。</p>
+<script type="math/tex; mode=display">
+q(s_j^t|s_j^{t-1})=\text{Multinomial}((1-\beta^t)\times\text{onehot}(s_j^{t-1})+\beta^t\times\frac{1}{20})</script><p>反向传播过程就是模型训练的目标，能够扩散生成序列，而前面的结构信息和当前分布会通过给定的神经网络$F(.)[j]$嵌入反向传播。</p>
+<script type="math/tex; mode=display">
+p(s_j^{t-1}|R^t,C_{ab},C_{ag})=\text{Multinomial}(F(R^t,C_{ab},C_{ag})[j])</script><p>这里采用了DiffAb的架构作为一个扩散模型。</p>
+<h2 id="检索算法"><a href="#检索算法" class="headerlink" title="检索算法"></a>检索算法</h2><p>论文采用MASTER算法进行fragment查询，使用RMSD进行约束。算法描述比较笼统，但简单来说就是沿着残基进行长度为m的扫描，计算RMSD，如果符合要求则算到里面。</p>
+<img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/master.png" class="">
+<p>虽然MASTER算法不考虑序列同源性，但作者在训练时对搜到的序列片段进行了identity分析，保留了同源性较高的片段用来训练（作为进化信息）。但在推理生成时没有进行筛选。</p>
+<h2 id="扩散生成模型架构"><a href="#扩散生成模型架构" class="headerlink" title="扩散生成模型架构"></a>扩散生成模型架构</h2><p>如其图所示，$F$模型存在两个分支，一个负责接收$R<em>t, C</em>{ab}, C_{ag}$三块全局的结构和序列信息的全局几何信息分支，一个负责接收RA检索信息的局部CDR信息分支。</p>
+<h3 id="全局几何信息分支"><a href="#全局几何信息分支" class="headerlink" title="全局几何信息分支"></a>全局几何信息分支</h3><p>这一分支分为一个结构编码模块、一个序列编码模块以及一个信息整合模块。</p>
+<ul>
+<li>结构编码：分别有由两个MLP负责生成残基自身特征编码$z<em>i$和残基相互之间几何关系特征编码$y</em>{ij}$。</li>
+<li>序列编码：就是用当前的序列PSSM矩阵信息输入ESM2-650M的模型，拿到一个embedding信息$e_t$。</li>
+<li>信息接收模块：上述结构编码和序列编码后送入这个模块，拼接输入一个IPA（invariant point attention）模块转化为隐变量$h_i$，然后通过MLP转换为当前timestamp的一个$R^{t-1}$预测概率分布。</li>
+</ul>
+<h3 id="局部CDR信息分支"><a href="#局部CDR信息分支" class="headerlink" title="局部CDR信息分支"></a>局部CDR信息分支</h3><p>这里实际上可以把检索的CDR片段信息看作类似alphafold的MSA信息，作者会将第一个分支给出预测分布与MSA信息进行类似MSA Transformer那样的row attention与column attention计算，得到一个CDR-focused axial attention信息矩阵，最后矩阵转换为加入检索信息的PSSM概率矩阵。</p>
+<p>同时模型架构加入了残差设计，希望将少因此带来的结构信息损失。</p>
+<p>相比与直接进行序列MSA，结构相似性搜索更有利于增加设计CDR的多样性。但是作者又将训练时MSA进行做了相似性筛选，这是比较令人困惑的。</p>
+<p>todo：深挖一下里面可能的计算实现细节。</p>
+<h2 id="Loss的定义"><a href="#Loss的定义" class="headerlink" title="Loss的定义"></a>Loss的定义</h2><p>每一步的loss是计算了每个位置残基概率分布的KL散度</p>
+<script type="math/tex; mode=display">
+L_{type}^t=\mathbb{E}_{R^t\sim p}\left[\frac{1}{m}\sum_jD_{KL}\left(q(s_j^{t-1}|s_j^t,s_j^0)||p(s_j^{t-1}|R^t,C_{ab},C_{ag},\mathbb{A})\right)\right]</script><p>总的loss就是每个步的loss的期望：</p>
+<script type="math/tex; mode=display">
+L=\mathbb{E}_{t\sim Uniform(1\cdots T)}L_{type}^t</script><p>下面是官方给的训练伪代码：<br><img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/train.png" class=""></p>
+<h1 id="训练配置"><a href="#训练配置" class="headerlink" title="训练配置"></a>训练配置</h1><ul>
+<li>框架：Pytorch</li>
+<li>优化器：Adam</li>
+<li>学习率：1e-4</li>
+<li>学习率优化：employed plateu （reduce rate 0.8）</li>
+</ul>
+<h1 id="结果评估"><a href="#结果评估" class="headerlink" title="结果评估"></a>结果评估</h1><img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/energy.png" class="">
+<img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/table1.png" class="">
+<p>算法由于是用抗原抗体复合物数据，显然也是在SabDab数据上训练的，从结果来看确实相比此前方法有更高的AAR和更低的scRMSD，但是其算法消除实验表明，不出现group truth的搜索结果的情况下，性能会有断崖式下降，这对于不在PDB中存在的全新数据，可能会有明显的影响影响。</p>
+<img src="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/ablation.png" class="">
+<p>同时这篇论文没有对设计结果做必要的湿实验验证，其真实效果有待考察。当然论文作者给我们提供了一个比较新颖的技术路线。抗体数据相对来说较为缺乏，通过PDB中进行信息检索，能够一定程度上弥补这种数据不足带来的影响。</p>
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">GCS-ZHN</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://gcszhn.top/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/">https://gcszhn.top/2024/10/24/RADAb抗体序列设计算法-上交大/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gcszhn.top">潇洒记忆</a>！</span></div></div></article><div id="pagination"><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2024/10/24/Chroma%E6%B5%8B%E8%AF%95%E4%B8%8Ebinder%E8%AE%BE%E8%AE%A1%E6%8E%A2%E7%B4%A2/"><span>Chroma测试与binder设计探索</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2024 By GCS-ZHN</div><a href="https://beian.miit.gov.cn/" target="_blank">&nbsp; 浙ICP备2022014039号</a></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--></body></html>
