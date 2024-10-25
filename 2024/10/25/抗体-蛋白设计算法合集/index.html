@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="抗体/蛋白设计算法合集"><meta name="keywords" content="antibody design,protein design,ai"><meta name="author" content="GCS-ZHN,undefined"><meta name="copyright" content="GCS-ZHN"><title>抗体/蛋白设计算法合集【潇洒记忆】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- script(src=url_for("/js/mathjax/mathjax.js"))--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+});
+</script><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  gitment: {},
+  valine: {},
+}</script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BindCraft"><span class="toc-number">1.</span> <span class="toc-text">BindCraft</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RADAb"><span class="toc-number">2.</span> <span class="toc-text">RADAb</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">GCS-ZHN</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://github.com/GCS-ZHN" target="_blank">GitHub<i class="icon-dot bg-color10"></i></a><a class="links-button button-hover" href="mailto:zhang.h.n@foxmail.com" target="_blank">E-Mail<i class="icon-dot bg-color5"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">28</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">55</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">19</span></a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/archives">归档</a></nav><div class="right-info"><a class="title-name" href="/">潇洒记忆</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">抗体/蛋白设计算法合集</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2024-10-25 | 更新于 2024-10-25</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/">AI4S</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/%E8%9B%8B%E7%99%BD%E8%AE%BE%E8%AE%A1/">蛋白设计</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/antibody-design/">antibody design</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/protein-design/">protein design</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/ai/">ai</a></div></div></div><div class="main-content"><p>本文是对抗体/蛋白设计算法的汇总。根据算法的特点共性，设置以下字段：</p>
+<ul>
+<li>名称</li>
+<li>序列类型<ul>
+<li>普通蛋白<ul>
+<li>peptide</li>
+<li>mini protein</li>
+<li>antigen</li>
+</ul>
+</li>
+<li>抗体<ul>
+<li>nanobody</li>
+<li>mAb</li>
+<li>scFv</li>
+<li>CDR</li>
+<li>other antibody<span id="more"></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>方法类型<ul>
+<li>Diffusion</li>
+<li>EGNN</li>
+<li>SE(3)-Transformer</li>
+<li>MPNN</li>
+<li>VAE</li>
+<li>CNN</li>
+<li>ODE/PDE</li>
+<li>Iteration Refinement</li>
+<li>Hallucination </li>
+<li>LLM Transformer</li>
+<li>Structure Modelling</li>
+<li>GVP</li>
+<li>CLIP</li>
+<li>Contrastive Learning</li>
+<li>Method Combination</li>
+<li>Backward Propagation</li>
+<li>Retrieval Augmented</li>
+</ul>
+</li>
+<li>设计类型<ul>
+<li>Fix-bb Sequence Design</li>
+<li>LLM Sequence Design</li>
+<li>Backbone Structure Design</li>
+<li>Codesign</li>
+</ul>
+</li>
+<li>数据源</li>
+<li>作者与单位</li>
+<li>发表平台与发表时间</li>
+<li>性能指标<ul>
+<li>AAR （Seq recovery）</li>
+<li>Perplexity</li>
+<li>RMSD or scRMSD</li>
+<li>Naturalness</li>
+<li>湿实验结果</li>
+</ul>
+</li>
+<li>开源状态<ul>
+<li>源码及其license</li>
+<li>权重及其license</li>
+</ul>
+</li>
+</ul>
+<h1 id="BindCraft"><a href="#BindCraft" class="headerlink" title="BindCraft"></a>BindCraft</h1><ul>
+<li>本站链接：<a href="/2024/10/23/BindCraft%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90%E5%92%8C%E6%B5%8B%E8%AF%95/" title="BindCraft算法解析和测试">BindCraft算法解析和测试</a></li>
+<li>序列类型：peptide，mini protein</li>
+<li>设计类型：codesign</li>
+<li>方法类型：Hallucination，Backward Propagation</li>
+<li>数据源：无，但所依赖的alphafold模型需要PDB数据库。</li>
+<li>作者与单位：<ul>
+<li>第一作者：Martin Pacesa</li>
+<li>通讯作者：Bruno E. Correia，Sergey Ovchinnikov</li>
+<li>单位：Laboratory of Protein Design and Immunoengineering, École Polytechnique Fédérale de Lausanne and Swiss Institute of Bioinformatics; Lausanne, Switzerland</li>
+</ul>
+</li>
+<li>发表平台与发表时间：bioRxiv，2024/10/1</li>
+<li>性能指标：<ul>
+<li>湿实验结果：10～100%的结合成功率</li>
+</ul>
+</li>
+<li>开源状态：<ul>
+<li>源码：<a target="_blank" rel="noopener" href="https://github.com/martinpacesa/BindCraft.git">https://github.com/martinpacesa/BindCraft.git</a></li>
+<li>源码license：MIT license</li>
+<li>权重：alphafold2的权重</li>
+<li>权重license：Apache 2.0 license</li>
+</ul>
+</li>
+</ul>
+<h1 id="RADAb"><a href="#RADAb" class="headerlink" title="RADAb"></a>RADAb</h1><ul>
+<li>本站链接：<a href="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/" title="RADAb抗体序列设计算法-上交大">RADAb抗体序列设计算法-上交大</a></li>
+<li>序列类型：CDR</li>
+<li>设计类型：fix-bb sequence design</li>
+<li>方法类型：Diffusion, Retrieval Augmented</li>
+<li>数据源：SAbDab</li>
+<li>作者与单位：<ul>
+<li>第一作者：Zichen Wang</li>
+<li>通讯作者：Shuangjia Zheng</li>
+<li>单位：Shanghai Jiao Tong University</li>
+</ul>
+</li>
+<li>发表平台与发表时间：arXiv，2024/10/10</li>
+<li>性能指标：<ul>
+<li>AAR:<ul>
+<li>HCDR3: 57.02%</li>
+</ul>
+</li>
+<li>scRMSD:<ul>
+<li>HCDR3: 2.23</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>开源状态：未开源</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">GCS-ZHN</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://gcszhn.top/2024/10/25/%E6%8A%97%E4%BD%93-%E8%9B%8B%E7%99%BD%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95%E5%90%88%E9%9B%86/">https://gcszhn.top/2024/10/25/抗体-蛋白设计算法合集/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gcszhn.top">潇洒记忆</a>！</span></div></div></article><div id="pagination"><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2024/10/24/RADAb%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E8%AE%BE%E8%AE%A1%E7%AE%97%E6%B3%95-%E4%B8%8A%E4%BA%A4%E5%A4%A7/"><span>RADAb抗体序列设计算法-上交大</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2024 By GCS-ZHN</div><a href="https://beian.miit.gov.cn/" target="_blank">&nbsp; 浙ICP备2022014039号</a></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--></body></html>
