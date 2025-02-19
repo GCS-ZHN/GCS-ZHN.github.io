@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="IgDesign: Absci抗体从头设计"><meta name="keywords" content="antibody design,AI4S,Absci"><meta name="author" content="GCS-ZHN,undefined"><meta name="copyright" content="GCS-ZHN"><title>IgDesign: Absci抗体从头设计【潇洒记忆】</title><link rel="stylesheet" href="/css/fan.css"><link rel="stylesheet" href="/css/thirdparty/jquery.mCustomScrollbar.min.css"><link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css"><link rel="icon" href="/favicon.ico"><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- script(src=url_for("/js/mathjax/mathjax.js"))--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+});
+</script><script>var isPassword = '' || false;
+if (isPassword) {
+    if (prompt('请输入文章密码') !== '') {
+        alert('密码错误！');
+        history.back();
+    }
+}</script><script>window.GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  gitment: {},
+  valine: {},
+}</script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">算法解析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">训练数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="toc-number">2.1.</span> <span class="toc-text">数据来源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">数据划分</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">超参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81"><span class="toc-number">4.</span> <span class="toc-text">实验验证</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%93%E7%AD%9B"><span class="toc-number">4.1.</span> <span class="toc-text">库筛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B9%BF%E5%AE%9E%E9%AA%8C"><span class="toc-number">4.2.</span> <span class="toc-text">湿实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">4.3.</span> <span class="toc-text">结果</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">GCS-ZHN</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="https://github.com/GCS-ZHN" target="_blank">GitHub<i class="icon-dot bg-color7"></i></a><a class="links-button button-hover" href="mailto:zhang.h.n@foxmail.com" target="_blank">E-Mail<i class="icon-dot bg-color5"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/archives"><span class="pull-top">日志</span><span class="pull-bottom">36</span></a><a class="author-info-articles-tags article-meta" href="/tags"><span class="pull-top">标签</span><span class="pull-bottom">65</span></a><a class="author-info-articles-categories article-meta" href="/categories"><span class="pull-top">分类</span><span class="pull-bottom">22</span></a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/archives">归档</a></nav><div class="right-info"><a class="title-name" href="/">潇洒记忆</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">IgDesign: Absci抗体从头设计</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2025-02-14 | 更新于 2025-02-19</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/">AI4S</a><i class="fa fa-angle-right" style="margin: 0 8px;"></i><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/categories/AI4S/%E8%9B%8B%E7%99%BD%E8%AE%BE%E8%AE%A1/">蛋白设计</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/antibody-design/">antibody design</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/AI4S/">AI4S</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/tags/Absci/">Absci</a></div></div></div><div class="main-content"><p>原文链接：<a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2023.12.08.570889v2">IgDesign: In vitro validated antibody design against multiple therapeutic antigens using inverse folding</a></p>
+<p>开源信息：<a target="_blank" rel="noopener" href="https://github.com/AbSciBio/igdesign">GitHub - AbSciBio/igdesign</a></p>
+<p>许可证：<a target="_blank" rel="noopener" href="https://github.com/AbSciBio/igdesign/blob/main/LICENSE">MIT License</a></p>
+<img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/fig1.jpg" class="">
+<span id="more"></span>
+<h1 id="算法解析"><a href="#算法解析" class="headerlink" title="算法解析"></a>算法解析</h1><blockquote>
+<p>Our study introduces IgDesign, a generative antibody inverse folding model based on LM-Design, and the first such model to be validated in vitro for antibody binder design.</p>
+</blockquote>
+<p>IgDesign 是一个基于 LM-Design 的生成抗体反折叠模型，<br>并首次在体外验证了抗体结合剂的设计。<a target="_blank" rel="noopener" href="https://github.com/BytedProtein/ByProt">LM-Design</a>是此前字节跳动开源的一个技术路线。</p>
+<p>相比于lmdesign使用proteinMPNN原版模型，IgDesign自己训练了一个IgMPNN抗体模型。与类似的抗体模型abMPNN相比，有下列不同：</p>
+<blockquote>
+<p>however we note two key differences between the models: (1) IgMPNN is provided antigen sequence and antibody framework (FWR) sequences as context during training. (2) IgMPNN decodes antibody CDRs in sequential order during training: HCDR1, HCDR2, HCDR3, LCDR1, LCDR2, LCDR3. During inference, any order of CDRs can be specified.</p>
+</blockquote>
+<p>LM-Design的核心思路是利用一个BottleNeck适配器结合结构编码器和PLM解码器，生成更具有天然性质的合理序列。模型选择使用ESM2-3B作为PLM模型，并自行训练proteinMPNN抗体版本IgMPNN，最终干湿结合筛选得到阳性序列。</p>
+<h1 id="训练数据"><a href="#训练数据" class="headerlink" title="训练数据"></a>训练数据</h1><h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><ul>
+<li>PDB数据：预训练IgMPNN模型</li>
+<li>SAbDab复合物数据：训练IgMPNN模型和组合构建的IgDesign模型</li>
+</ul>
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><p>PDB依据序列相似度40%聚类划分，Sabdab依据抗原序列相似度40%划分。</p>
+<h1 id="超参数"><a href="#超参数" class="headerlink" title="超参数"></a>超参数</h1><ul>
+<li>优化器：Adam</li>
+<li>学习率：1e-3</li>
+</ul>
+<h1 id="实验验证"><a href="#实验验证" class="headerlink" title="实验验证"></a>实验验证</h1><h2 id="库筛"><a href="#库筛" class="headerlink" title="库筛"></a>库筛</h2><p>从sabdab中选择8个抗原，依次使用IgDesign设计HCDR3，HCDR1，HCDR2，LCDR1，LCDR2，LCDR3。<br>每个抗原生成一百万序列，然后筛选出CE损失最小的100条HCR3设计序列和HCDR123设计序列进行湿实验。</p>
+<h2 id="湿实验"><a href="#湿实验" class="headerlink" title="湿实验"></a>湿实验</h2><p>从E. coli中表达抗体，SPR实验检测抗体与抗原的结合力，并测序确定抗体序列。</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><ul>
+<li>AAR</li>
+</ul>
+<p>下图是对比proteinMPNN、IgMPNN、IgDesign的AAR结果。</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around; text-align: center;">
+    <figure style="width: 45%; margin: 5px;">
+        <img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/fig3.jpg" alt="">
+        <figcaption>重链AAR的1-shot结果</figcaption>
+    </figure>
+    <figure style="width: 45%; margin: 5px;">
+        <img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/fig4.jpg" alt="">
+        <figcaption>轻链AAR的1-shot结果</figcaption>
+    </figure>
+</div>
+
+<ul>
+<li>SPR结合率</li>
+</ul>
+<p>相比从sabdab随机采样，IgDesign设计抗体结合率更高。</p>
+<img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/tab3.jpg" class="">
+<img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/fig2.jpg" class="">
+<ul>
+<li>scRMSD</li>
+</ul>
+<p>本文用了多个不同结构预测模型来评估scRMSD，并使用双端t-test来评估显著性。<br>与wt分布做比照，binding的scRMSD分布t值相对低于non-binding。下面是Ravagalimab/CD40的结果。</p>
+<img src="/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/fig5_6.jpg" class="">
+</div><div class="post-copyright"><div class="post-copyright-author"><span class="post-copyright-meta">本文作者: </span><span class="post-copyright-info"><a href="mailto:undefined">GCS-ZHN</a></span></div><div class="post-copyright-type"><span class="post-copyright-meta">本文链接: </span><span class="post-copyright-info"><a href="https://gcszhn.top/2025/02/14/IgDesign-Absci%E6%8A%97%E4%BD%93%E4%BB%8E%E5%A4%B4%E8%AE%BE%E8%AE%A1/">https://gcszhn.top/2025/02/14/IgDesign-Absci抗体从头设计/</a></span></div><div class="post-copyright-notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://gcszhn.top">潇洒记忆</a>！</span></div></div></article><div id="pagination"><div class="next-post pull-right"><span class="line line-top"></span><span class="line line-right"></span><span class="line line-bottom"></span><span class="line line-left"></span><a href="/2024/12/10/AIDA%EF%BC%9A%E5%9F%BA%E4%BA%8E%E6%8A%97%E5%8E%9F%E7%BB%93%E6%9E%84%E4%B8%8E%E6%8A%97%E4%BD%93%E5%BA%8F%E5%88%97%E7%9A%84%E6%8A%97%E4%BD%93%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95-%E6%BB%91%E9%93%81%E5%8D%A2%E5%A4%A7%E5%AD%A6/"><span>AIDA：基于抗原结构与抗体序列的抗体设计方法-滑铁卢大学</span><span>&nbsp;</span><i class="fas fa-angle-right"></i></a></div></div><!--div!= paginator()--></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fas fa-file-o"></i></span><span id="busuanzi_value_page_pv"></span><span></span></div><div class="copyright">&copy;2017 ～ 2025 By GCS-ZHN</div><a href="https://beian.miit.gov.cn/" target="_blank">&nbsp; 浙ICP备2022014039号</a></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/js/copy.js"></script><!--script(src=url)--></body></html>
